@@ -1,10 +1,10 @@
 import { useEffect, useState } from 'react';
+import './App.css'; // <-- Import du CSS
 
 function App() {
   const [tasks, setTasks] = useState([]);
   const [newTask, setNewTask] = useState('');
-
-  const API_URL = "http://localhost:3017/api/tasks";
+  const API_URL = "https://cheickpoint-deployement-backend-1.onrender.com/api/tasks";
 
   const fetchTasks = async () => {
     try {
@@ -46,34 +46,34 @@ function App() {
   };
 
   return (
-    <div style={{ maxWidth: '600px', margin: 'auto' }}>
-      <h1>✅ Ma Todo List</h1>
+    <div className="container">
+      <h1 className="title">✅ Ma Todo List</h1>
 
-      <input
-        type="text"
-        placeholder="Nouvelle tâche"
-        value={newTask}
-        onChange={(e) => setNewTask(e.target.value)}
-      />
-      <button onClick={handleAdd}>Ajouter</button>
+      <div className="form">
+        <input
+          type="text"
+          className="input"
+          placeholder="Nouvelle tâche"
+          value={newTask}
+          onChange={(e) => setNewTask(e.target.value)}
+        />
+        <button className="btn add-btn" onClick={handleAdd}>Ajouter</button>
+      </div>
 
-      <ul>
+      <ul className="task-list">
         {tasks.map((task) => (
-          <li key={task._id} style={{ margin: '10px 0' }}>
-             <input
-              type="checkbox"
-              checked={task.completed}
-              onChange={() => handleToggle(task)}
-            />
-        <span
-         style={{
-          marginLeft: '10px',
-          textDecoration: task.completed ? 'line-through' : 'none',
-        }}
-      >
-              {task.text}
-            </span>
-            <button onClick={() => handleDelete(task._id)} style={{ marginLeft: '10px' }}>
+          <li key={task._id} className="task-item">
+            <label>
+              <input
+                type="checkbox"
+                checked={task.completed}
+                onChange={() => handleToggle(task)}
+              />
+              <span className={`task-text ${task.completed ? 'completed' : ''}`}>
+                {task.text}
+              </span>
+            </label>
+            <button className="btn delete-btn" onClick={() => handleDelete(task._id)}>
               Supprimer
             </button>
           </li>
